@@ -1,33 +1,65 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StatusBar,
   StyleSheet,
   useColorScheme,
   View,
   Text,
+  Appearance,
 } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+
+// Import Redux store
+import { store } from './src/redux/store';
+import { updateSystemTheme } from './src/redux/slices/themeSlice';
+import { useAppSelector } from './src/redux/hooks';
 
 // Import our theme
 import { colors, theme } from './src/config/colors';
 
+// Import components
+import ThemeSwitcher from './src/components/ThemeSwitcher';
+
+// Root component with Redux Provider
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <App />
+      </SafeAreaProvider>
+    </Provider>
+  );
+};
+
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const themeMode = isDarkMode ? theme.dark : theme.light;
+  const systemColorScheme = useColorScheme();
+  const { isDark, mode } = useAppSelector(state => state.theme);
+
+  // Listen to system theme changes
+  useEffect(() => {
+    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      if (colorScheme) {
+        store.dispatch(updateSystemTheme(colorScheme));
+      }
+    });
+
+    return () => subscription.remove();
+  }, []);
 
   return (
-    <SafeAreaProvider>
+    <>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={
-          isDarkMode ? colors.background.dark : colors.background.light
+          isDark ? colors.background.dark : colors.background.light
         }
       />
-      <AppContent isDarkMode={isDarkMode} />
-    </SafeAreaProvider>
+      <AppContent isDarkMode={isDark} />
+    </>
   );
 }
 
@@ -73,6 +105,9 @@ function AppContent({
       >
         Your personal movie companion
       </Text>
+
+      {/* Theme Switcher */}
+      <ThemeSwitcher />
     </View>
   );
 }
@@ -83,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default AppWrapper;
