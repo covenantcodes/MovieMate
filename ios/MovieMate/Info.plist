@@ -52,6 +52,15 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
+		<string>Asap-Regular.ttf</string>
+		<string>Asap-Bold.ttf</string>
+		<string>Asap-Light.ttf</string>
+		<string>Asap-ExtraLight.ttf</string>
+		<string>Asap-Medium.ttf</string>
+		<string>Asap-MediumItalic.ttf</string>
+		<string>Asap-SemiBold.ttf</string>
+		<string>Asap-ExtraBold.ttf</string>
+		<!-- Add any other fonts you're using -->
 	</array>
 </dict>
 </plist>
