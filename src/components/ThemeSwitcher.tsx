@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { setThemeMode } from '../redux/slices/themeSlice';
 import { colors } from '../config/colors';
+import { FONT_FAMILY } from '../config/fonts';
 
 type ThemeOption = 'light' | 'dark' | 'system';
 
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '600',
+    fontFamily: FONT_FAMILY.semiBold,
     marginBottom: 12,
   },
   optionsContainer: {
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary.main,
   },
   optionText: {
+    fontFamily: FONT_FAMILY.medium,
     color: colors.neutral.grey600,
   },
   selectedOptionText: {

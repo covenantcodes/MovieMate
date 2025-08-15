@@ -1,0 +1,49 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Asap/Asap-Bold.ttf",
+      "sha1": "5d896bb6265557cce35f472c264d629532c240e8"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-ExtraBold.ttf",
+      "sha1": "9c20c40a8dc22e713ee8c38c70dd87b21794c887"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-ExtraLight.ttf",
+      "sha1": "e52316c03e7b789ec6eff59d4e03b432ab9b5cc1"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-Light.ttf",
+      "sha1": "b1af54e6cf8ce83861e896346f08d70d7b6621f9"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-Medium.ttf",
+      "sha1": "ce0b9a8f2d1545a4f6043503c5f3808b281a55f0"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-MediumItalic.ttf",
+      "sha1": "75ba8a0737d56085c66ac072aef38e744d79ba26"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-Regular.ttf",
+      "sha1": "e1058680c4a9d4fe69bf877cdb737050228f4e67"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-SemiBold.ttf",
+      "sha1": "9a8b591174a1c7b5f79166af9426a7d04433ee3f"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-Thin.ttf",
+      "sha1": "6888e813564cd6efef5a4107ca7bb4bf5f1658fc"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap-VariableFont_wdth,wght.ttf",
+      "sha1": "771fca84fab91e4b65646d20e3bd68395c033369"
+    },
+    {
+      "path": "assets/fonts/Asap/Asap.ttf",
+      "sha1": "771fca84fab91e4b65646d20e3bd68395c033369"
+    }
+  ]
+}

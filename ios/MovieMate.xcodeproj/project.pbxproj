@@ -9,22 +9,44 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-MovieMate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-MovieMate.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		366A0311A3B34FE2A6B4A839 /* Asap-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEA4F6291C8C4F789821BEE7 /* Asap-Bold.ttf */; };
+		48A75369E4DD4F7997138341 /* Asap-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DC705270C5C4F239D92F31E /* Asap-Thin.ttf */; };
+		4CD99C4EB706443F9899A29D /* Asap-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54E021A9B5664BAD8234AC64 /* Asap-ExtraLight.ttf */; };
+		4E3B7DB892C740429D1AF664 /* Asap.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE155628B5414CD18885A5F3 /* Asap.ttf */; };
 		5A9CA3333B976EB4E5684028 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		7E7BDA14DCF6485D8C3923DE /* Asap-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A4EF6106BD94C4FBE528358 /* Asap-Light.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9A642A998096468C93D341EB /* Asap-VariableFont_wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02567B33330E4513B55C9ED9 /* Asap-VariableFont_wdth,wght.ttf */; };
+		9B075DDCF57E4E23855B14A7 /* Asap-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA7BEE2304C242D8966EFDA2 /* Asap-ExtraBold.ttf */; };
+		C825640EB9454DAFAD61B949 /* Asap-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F3790AEC0B94916AF7EB01D /* Asap-SemiBold.ttf */; };
+		F5122A4B26744C9F969B7EC0 /* Asap-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E2BC91A3E4608950404F7 /* Asap-Regular.ttf */; };
+		FA1DA017394449CAAC7D09AD /* Asap-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EAA73480C7543E1A31438B8 /* Asap-Medium.ttf */; };
+		FE474E9D0D3A46349008284B /* Asap-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46BB47396CD34E609CA57810 /* Asap-MediumItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02567B33330E4513B55C9ED9 /* Asap-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-VariableFont_wdth,wght.ttf"; path = "../assets/fonts/Asap/Asap-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MovieMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MovieMate/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MovieMate/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = MovieMate/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2A4EF6106BD94C4FBE528358 /* Asap-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-Light.ttf"; path = "../assets/fonts/Asap/Asap-Light.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-MovieMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieMate.debug.xcconfig"; path = "Target Support Files/Pods-MovieMate/Pods-MovieMate.debug.xcconfig"; sourceTree = "<group>"; };
+		46BB47396CD34E609CA57810 /* Asap-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-MediumItalic.ttf"; path = "../assets/fonts/Asap/Asap-MediumItalic.ttf"; sourceTree = "<group>"; };
+		54E021A9B5664BAD8234AC64 /* Asap-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-ExtraLight.ttf"; path = "../assets/fonts/Asap/Asap-ExtraLight.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-MovieMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieMate.release.xcconfig"; path = "Target Support Files/Pods-MovieMate/Pods-MovieMate.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-MovieMate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MovieMate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F7E2BC91A3E4608950404F7 /* Asap-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-Regular.ttf"; path = "../assets/fonts/Asap/Asap-Regular.ttf"; sourceTree = "<group>"; };
+		6DC705270C5C4F239D92F31E /* Asap-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-Thin.ttf"; path = "../assets/fonts/Asap/Asap-Thin.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MovieMate/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MovieMate/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8EAA73480C7543E1A31438B8 /* Asap-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-Medium.ttf"; path = "../assets/fonts/Asap/Asap-Medium.ttf"; sourceTree = "<group>"; };
+		8F3790AEC0B94916AF7EB01D /* Asap-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-SemiBold.ttf"; path = "../assets/fonts/Asap/Asap-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA7BEE2304C242D8966EFDA2 /* Asap-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-ExtraBold.ttf"; path = "../assets/fonts/Asap/Asap-ExtraBold.ttf"; sourceTree = "<group>"; };
+		CE155628B5414CD18885A5F3 /* Asap.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Asap.ttf; path = ../assets/fonts/Asap/Asap.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FEA4F6291C8C4F789821BEE7 /* Asap-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Asap-Bold.ttf"; path = "../assets/fonts/Asap/Asap-Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +97,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				B8250AD8AAF14B79A29A2FA1 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -87,6 +110,25 @@
 				13B07F961A680F5B00A75B9A /* MovieMate.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B8250AD8AAF14B79A29A2FA1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FEA4F6291C8C4F789821BEE7 /* Asap-Bold.ttf */,
+				BA7BEE2304C242D8966EFDA2 /* Asap-ExtraBold.ttf */,
+				54E021A9B5664BAD8234AC64 /* Asap-ExtraLight.ttf */,
+				2A4EF6106BD94C4FBE528358 /* Asap-Light.ttf */,
+				8EAA73480C7543E1A31438B8 /* Asap-Medium.ttf */,
+				46BB47396CD34E609CA57810 /* Asap-MediumItalic.ttf */,
+				5F7E2BC91A3E4608950404F7 /* Asap-Regular.ttf */,
+				8F3790AEC0B94916AF7EB01D /* Asap-SemiBold.ttf */,
+				6DC705270C5C4F239D92F31E /* Asap-Thin.ttf */,
+				02567B33330E4513B55C9ED9 /* Asap-VariableFont_wdth,wght.ttf */,
+				CE155628B5414CD18885A5F3 /* Asap.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -161,6 +203,17 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				5A9CA3333B976EB4E5684028 /* PrivacyInfo.xcprivacy in Resources */,
+				366A0311A3B34FE2A6B4A839 /* Asap-Bold.ttf in Resources */,
+				9B075DDCF57E4E23855B14A7 /* Asap-ExtraBold.ttf in Resources */,
+				4CD99C4EB706443F9899A29D /* Asap-ExtraLight.ttf in Resources */,
+				7E7BDA14DCF6485D8C3923DE /* Asap-Light.ttf in Resources */,
+				FA1DA017394449CAAC7D09AD /* Asap-Medium.ttf in Resources */,
+				FE474E9D0D3A46349008284B /* Asap-MediumItalic.ttf in Resources */,
+				F5122A4B26744C9F969B7EC0 /* Asap-Regular.ttf in Resources */,
+				C825640EB9454DAFAD61B949 /* Asap-SemiBold.ttf in Resources */,
+				48A75369E4DD4F7997138341 /* Asap-Thin.ttf in Resources */,
+				9A642A998096468C93D341EB /* Asap-VariableFont_wdth,wght.ttf in Resources */,
+				4E3B7DB892C740429D1AF664 /* Asap.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

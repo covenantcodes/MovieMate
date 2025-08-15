@@ -4,7 +4,6 @@ import {
   StyleSheet,
   useColorScheme,
   View,
-  Text,
   Appearance,
 } from 'react-native';
 import {
@@ -13,16 +12,18 @@ import {
 } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
-// Import Redux store
+//  Redux section
 import { store } from './src/redux/store';
 import { updateSystemTheme } from './src/redux/slices/themeSlice';
 import { useAppSelector } from './src/redux/hooks';
 
-// Import our theme
+// Config Section
 import { colors, theme } from './src/config/colors';
+import { FONT_FAMILY } from './src/config/fonts';
 
-// Import components
+// Component Section
 import ThemeSwitcher from './src/components/ThemeSwitcher';
+import Text from './src/components/Text';
 
 // Root component with Redux Provider
 const AppWrapper = () => {
@@ -84,25 +85,10 @@ function AppContent({
         },
       ]}
     >
-      <Text
-        style={{
-          color: themeMode.colors.text.primary,
-          fontSize: 24,
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginTop: 20,
-        }}
-      >
+      <Text style={[styles.title, { color: themeMode.colors.text.primary }]}>
         MovieMate
       </Text>
-      <Text
-        style={{
-          color: themeMode.colors.primary.main,
-          fontSize: 16,
-          textAlign: 'center',
-          marginTop: 10,
-        }}
-      >
+      <Text style={[styles.subtitle, { color: themeMode.colors.primary.main }]}>
         Your personal movie companion
       </Text>
 
@@ -115,6 +101,18 @@ function AppContent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  title: {
+    fontFamily: FONT_FAMILY.bold,
+    fontSize: 24,
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  subtitle: {
+    fontFamily: FONT_FAMILY.regular,
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 
