@@ -3,13 +3,9 @@ import {
   StatusBar,
   StyleSheet,
   useColorScheme,
-  View,
   Appearance,
 } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
 //  Redux section
@@ -19,11 +15,9 @@ import { useAppSelector } from './src/redux/hooks';
 
 // Config Section
 import { colors, theme } from './src/config/colors';
-import { FONT_FAMILY } from './src/config/fonts';
 
-// Component Section
-import ThemeSwitcher from './src/components/ThemeSwitcher';
-import Text from './src/components/Text';
+// Navigation
+import AppNavigator from './src/navigation/AppNavigator';
 
 // Root component with Redux Provider
 const AppWrapper = () => {
@@ -38,7 +32,7 @@ const AppWrapper = () => {
 
 function App(): React.JSX.Element {
   const systemColorScheme = useColorScheme();
-  const { isDark, mode } = useAppSelector(state => state.theme);
+  const { isDark } = useAppSelector(state => state.theme);
 
   // Listen to system theme changes
   useEffect(() => {
@@ -59,61 +53,9 @@ function App(): React.JSX.Element {
           isDark ? colors.background.dark : colors.background.light
         }
       />
-      <AppContent isDarkMode={isDark} />
+      <AppNavigator />
     </>
   );
 }
-
-function AppContent({
-  isDarkMode,
-}: {
-  isDarkMode: boolean;
-}): React.JSX.Element {
-  const safeAreaInsets = useSafeAreaInsets();
-  const themeMode = isDarkMode ? theme.dark : theme.light;
-
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: themeMode.colors.background,
-          paddingTop: safeAreaInsets.top,
-          paddingBottom: safeAreaInsets.bottom,
-          paddingLeft: safeAreaInsets.left,
-          paddingRight: safeAreaInsets.right,
-        },
-      ]}
-    >
-      <Text style={[styles.title, { color: themeMode.colors.text.primary }]}>
-        MovieMate
-      </Text>
-      <Text style={[styles.subtitle, { color: themeMode.colors.primary.main }]}>
-        Your personal movie companion
-      </Text>
-
-      {/* Theme Switcher */}
-      <ThemeSwitcher />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontFamily: FONT_FAMILY.bold,
-    fontSize: 24,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  subtitle: {
-    fontFamily: FONT_FAMILY.regular,
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 10,
-  },
-});
 
 export default AppWrapper;

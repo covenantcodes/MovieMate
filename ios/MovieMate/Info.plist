@@ -51,17 +51,7 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Asap-Bold.ttf</string>
-		<string>Asap-ExtraBold.ttf</string>
-		<string>Asap-ExtraLight.ttf</string>
-		<string>Asap-Light.ttf</string>
-		<string>Asap-Medium.ttf</string>
-		<string>Asap-MediumItalic.ttf</string>
-		<string>Asap-Regular.ttf</string>
-		<string>Asap-SemiBold.ttf</string>
-		<string>Asap-Thin.ttf</string>
-		<string>Asap-VariableFont_wdth,wght.ttf</string>
-		<string>Asap.ttf</string>
+		<string>Ionicons.ttf</string>
 	</array>
 </dict>
 </plist>
