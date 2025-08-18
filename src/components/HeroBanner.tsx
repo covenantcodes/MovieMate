@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,7 @@ import { LinearGradient } from 'react-native-linear-gradient';
 import { colors, theme } from '../config/colors';
 import { FONT_FAMILY, FONT_SIZE, LINE_HEIGHT } from '../config/fonts';
 import { useAppSelector } from '../redux/hooks';
+import { useSharedValue, withSpring, withSequence, useAnimatedStyle } from 'react-native-reanimated';
 
 interface HeroBannerProps {
   movie: Movie | null;
@@ -29,9 +30,46 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
 
+  // Local state to track favorite status
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // Shared value for favorite button animation
+  const favoriteScale = useSharedValue(1);
+
+  // Initialize favorite status when component mounts or movie changes
+  useEffect(() => {
+    if (movie) {
+      const favoriteStatus = tmdbApi.favorites.isFavorite(movie.id);
+      setIsFavorite(favoriteStatus);
+    }
+  }, [movie]);
+
   const handlePress = () => {
     if (movie) {
       navigation.navigate('MovieDetails', { movieId: movie.id });
+    }
+  };
+
+  // Animated style for the favorite button
+  const favoriteAnimStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: favoriteScale.value }],
+    };
+  });
+
+  const toggleFavorite = () => {
+    // Animate heart icon
+    favoriteScale.value = withSequence(
+      withSpring(1.4, { damping: 4 }),
+      withSpring(1, { damping: 10 })
+    );
+
+    if (isFavorite) {
+      tmdbApi.favorites.remove(movie.id);
+      setIsFavorite(false);
+    } else {
+      tmdbApi.favorites.add(movie);
+      setIsFavorite(true);
     }
   };
 
@@ -46,16 +84,6 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
   const backdropUrl = movie.backdrop_path
     ? `${IMAGE_SIZES.backdrop.large}${movie.backdrop_path}`
     : `${IMAGE_SIZES.poster.large}${movie.poster_path}`;
-
-  const isFavorite = tmdbApi.favorites.isFavorite(movie.id);
-
-  const toggleFavorite = () => {
-    if (isFavorite) {
-      tmdbApi.favorites.remove(movie.id);
-    } else {
-      tmdbApi.favorites.add(movie);
-    }
-  };
 
   return (
     <TouchableOpacity
@@ -97,11 +125,13 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
                 onPress={toggleFavorite}
                 style={styles.favoriteButton}
               >
-                <Icon
-                  name={isFavorite ? 'heart' : 'heart-outline'}
-                  size={18}
-                  color={isFavorite ? colors.error : colors.neutral.white}
-                />
+                <Animated.View style={favoriteAnimStyle}>
+                  <Icon
+                    name={isFavorite ? 'heart' : 'heart-outline'}
+                    size={18}
+                    color={isFavorite ? colors.error.main : colors.neutral.white}
+                  />
+                </Animated.View>
               </TouchableOpacity>
             </View>
           </View>

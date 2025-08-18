@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Image,
@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   withSpring,
+  withSequence,
 } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Movie, IMAGE_SIZES, tmdbApi } from '../services/tmdbApi';
@@ -39,19 +40,35 @@ const MovieCard: React.FC<MovieCardProps> = ({
   showRating = true,
   style,
 }) => {
+  // State for favorite status with immediate UI updates
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const navigation = useNavigation();
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
 
-  const isFavorite = tmdbApi.favorites.isFavorite(movie.id);
-
   // Scale animation on press
   const scale = useSharedValue(1);
+  // Scale animation for favorite button
+  const favoriteScale = useSharedValue(1);
+
+  // Load favorite status when component mounts or movie changes
+  useEffect(() => {
+    const favoriteStatus = tmdbApi.favorites.isFavorite(movie.id);
+    setIsFavorite(favoriteStatus);
+  }, [movie]);
 
   // Animation styles
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scale.value }],
+    };
+  });
+
+  // Animation style for favorite button
+  const favoriteAnimStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: favoriteScale.value }],
     };
   });
 
@@ -86,18 +103,26 @@ const MovieCard: React.FC<MovieCardProps> = ({
   };
 
   const toggleFavorite = () => {
+    // Animate heart icon
+    favoriteScale.value = withSequence(
+      withSpring(1.4, { damping: 4 }),
+      withSpring(1, { damping: 10 }),
+    );
+
     if (isFavorite) {
       tmdbApi.favorites.remove(movie.id);
+      setIsFavorite(false);
     } else {
       tmdbApi.favorites.add(movie);
+      setIsFavorite(true);
     }
   };
 
   // Calculate rating color
   const getRatingColor = (rating: number) => {
-    if (rating >= 7) return colors.success.main;
-    if (rating >= 5) return colors.warning.main;
-    return colors.error.main;
+    if (rating >= 7) return colors.success;
+    if (rating >= 5) return colors.warning;
+    return colors.error;
   };
 
   return (
@@ -133,13 +158,13 @@ const MovieCard: React.FC<MovieCardProps> = ({
           style={styles.favoriteButton}
           onPress={toggleFavorite}
         >
-          <Icon
-            name={isFavorite ? 'heart' : 'heart-outline'}
-            size={18}
-            color={
-              isFavorite ? colors.error.main : themeMode.colors.text.primary
-            }
-          />
+          <Animated.View style={favoriteAnimStyle}>
+            <Icon
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={18}
+              color={isFavorite ? colors.error : themeMode.colors.text.primary}
+            />
+          </Animated.View>
         </TouchableOpacity>
       </TouchableOpacity>
 
