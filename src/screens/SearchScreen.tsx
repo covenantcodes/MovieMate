@@ -129,6 +129,7 @@ const SearchScreen = () => {
           <ActivityIndicator size="large" color={colors.primary.main} />
         </View>
       ) : movies.length === 0 && query ? (
+        // No results found state
         <View style={styles.emptyContainer}>
           <Icon
             name="search-outline"
@@ -136,31 +137,102 @@ const SearchScreen = () => {
             color={themeMode.colors.text.secondary}
           />
           <Text
-            style={[
-              styles.emptyText,
-              { color: themeMode.colors.text.secondary },
-            ]}
+            style={[styles.emptyText, { color: themeMode.colors.text.primary }]}
           >
             No movies found for "{query}"
           </Text>
-        </View>
-      ) : movies.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Icon
-            name="film-outline"
-            size={64}
-            color={themeMode.colors.text.secondary}
-          />
           <Text
             style={[
-              styles.emptyText,
+              styles.emptySubtext,
               { color: themeMode.colors.text.secondary },
             ]}
           >
-            Search for your favorite movies
+            Try using different keywords or check your spelling
           </Text>
         </View>
+      ) : movies.length === 0 ? (
+        // Initial search state
+        <View style={styles.emptyContainer}>
+          <View style={styles.searchSuggestionContainer}>
+            <Icon
+              name="film-outline"
+              size={80}
+              color={colors.primary.main}
+              style={styles.searchIcon}
+            />
+
+            <Text
+              style={[
+                styles.emptyHeading,
+                { color: themeMode.colors.text.primary },
+              ]}
+            >
+              Find your favorite movies
+            </Text>
+
+            <Text
+              style={[
+                styles.emptySubtext,
+                { color: themeMode.colors.text.secondary },
+              ]}
+            >
+              Search by movie title, actor, or director
+            </Text>
+
+            {/* Quick search suggestions */}
+            <View style={styles.suggestionsContainer}>
+              <Text
+                style={[
+                  styles.suggestionsTitle,
+                  { color: themeMode.colors.text.primary },
+                ]}
+              >
+                Try searching for:
+              </Text>
+
+              <View style={styles.chipContainer}>
+                {['Action', 'Comedy', 'Marvel', 'Star Wars', 'Nolan'].map(
+                  suggestion => (
+                    <TouchableOpacity
+                      key={suggestion}
+                      style={[
+                        styles.suggestionChip,
+                        { backgroundColor: colors.primary.light },
+                      ]}
+                      onPress={() => {
+                        setQuery(suggestion);
+                        handleSearch(suggestion);
+                      }}
+                    >
+                      <Text style={styles.suggestionChipText}>
+                        {suggestion}
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                )}
+              </View>
+            </View>
+
+            <View style={styles.trendingSection}>
+              <Icon
+                name="trending-up-outline"
+                size={20}
+                color={colors.primary.main}
+                style={styles.trendingIcon}
+              />
+              <Text
+                style={[
+                  styles.trendingText,
+                  { color: themeMode.colors.text.secondary },
+                ]}
+              >
+                Try searching for trending movies
+              </Text>
+            </View>
+          </View>
+        </View>
       ) : (
+        // Search results
         <FlatList
           data={movies}
           keyExtractor={item => item.id.toString()}
@@ -212,12 +284,77 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   emptyText: {
-    marginTop: 16,
     fontSize: 16,
     fontFamily: FONT_FAMILY.medium,
     textAlign: 'center',
+    marginTop: 12,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    fontFamily: FONT_FAMILY.regular,
+    textAlign: 'center',
+    marginTop: 8,
+    maxWidth: 280,
+  },
+  searchSuggestionContainer: {
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 500,
+  },
+  searchIcon: {
+    marginBottom: 20,
+  },
+  emptyHeading: {
+    fontSize: 22,
+    fontFamily: FONT_FAMILY.bold,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  suggestionsContainer: {
+    marginTop: 30,
+    width: '100%',
+  },
+  suggestionsTitle: {
+    fontSize: 15,
+    fontFamily: FONT_FAMILY.medium,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  chipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginHorizontal: -4,
+  },
+  suggestionChip: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    margin: 4,
+  },
+  suggestionChipText: {
+    color: colors.neutral.white,
+    fontFamily: FONT_FAMILY.medium,
+    fontSize: 14,
+  },
+  trendingSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  trendingIcon: {
+    marginRight: 8,
+  },
+  trendingText: {
+    fontSize: 14,
+    fontFamily: FONT_FAMILY.medium,
   },
   listContent: {
     alignItems: 'center',

@@ -80,7 +80,7 @@ const MovieList: React.FC<MovieListProps> = ({
         <MovieCard
           movie={item}
           size={size}
-          showTitle={showTitle}
+          showTitle={false}
           showRating={showRating}
         />
       </Animated.View>
