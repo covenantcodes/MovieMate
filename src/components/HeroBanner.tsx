@@ -15,7 +15,12 @@ import { LinearGradient } from 'react-native-linear-gradient';
 import { colors, theme } from '../config/colors';
 import { FONT_FAMILY, FONT_SIZE, LINE_HEIGHT } from '../config/fonts';
 import { useAppSelector } from '../redux/hooks';
-import { useSharedValue, withSpring, withSequence, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  withSpring,
+  withSequence,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
 interface HeroBannerProps {
   movie: Movie | null;
@@ -61,7 +66,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
     // Animate heart icon
     favoriteScale.value = withSequence(
       withSpring(1.4, { damping: 4 }),
-      withSpring(1, { damping: 10 })
+      withSpring(1, { damping: 10 }),
     );
 
     if (isFavorite) {
@@ -129,7 +134,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
                   <Icon
                     name={isFavorite ? 'heart' : 'heart-outline'}
                     size={18}
-                    color={isFavorite ? colors.error.main : colors.neutral.white}
+                    color={isFavorite ? colors.error : colors.neutral.white}
                   />
                 </Animated.View>
               </TouchableOpacity>
