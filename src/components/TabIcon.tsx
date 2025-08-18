@@ -30,22 +30,40 @@ const TabIcon: React.FC<TabIconProps> = ({
   const opacity = useSharedValue(0);
   const animatedColor = useSharedValue(isFocused ? 1 : 0);
 
-  // Update animation values when focus changes
   useEffect(() => {
     if (isFocused) {
-      scale.value = withSpring(1.2, { damping: 10, stiffness: 100 });
-      backgroundScale.value = withSpring(1, { damping: 10, stiffness: 100 });
-      opacity.value = withTiming(1, { duration: 200 });
-      animatedColor.value = withTiming(1, { duration: 200 });
+      scale.value = withSpring(1.2, {
+        damping: 12,
+        stiffness: 180,
+        mass: 0.6,
+      });
+
+      backgroundScale.value = withSpring(1, {
+        damping: 12,
+        stiffness: 180,
+        mass: 0.6,
+      });
+
+      opacity.value = withTiming(1, { duration: 120 });
+      animatedColor.value = withTiming(1, { duration: 120 });
     } else {
-      scale.value = withSpring(1, { damping: 10, stiffness: 100 });
-      backgroundScale.value = withSpring(0, { damping: 10, stiffness: 100 });
-      opacity.value = withTiming(0, { duration: 150 });
-      animatedColor.value = withTiming(0, { duration: 200 });
+      scale.value = withSpring(1, {
+        damping: 12,
+        stiffness: 180,
+        mass: 0.6,
+      });
+
+      backgroundScale.value = withSpring(0, {
+        damping: 12,
+        stiffness: 180,
+        mass: 0.6,
+      });
+
+      opacity.value = withTiming(0, { duration: 100 });
+      animatedColor.value = withTiming(0, { duration: 120 });
     }
   }, [isFocused]);
 
-  // Use a solid icon when focused, outline when not focused
   const iconName = isFocused ? name.replace('-outline', '') : name;
 
   // Animated styles

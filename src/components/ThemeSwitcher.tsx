@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+} from 'react-native';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { setThemeMode } from '../redux/slices/themeSlice';
 import { colors } from '../config/colors';
@@ -11,14 +17,34 @@ const ThemeSwitcher: React.FC = () => {
   const { mode } = useAppSelector(state => state.theme);
   const dispatch = useAppDispatch();
 
+  // Animation values
+  const scaleAnim = React.useRef(new Animated.Value(1)).current;
+
   const options: ThemeOption[] = ['light', 'dark', 'system'];
 
   const handleThemeChange = (selectedMode: ThemeOption) => {
+    // Play animation
+    Animated.sequence([
+      Animated.timing(scaleAnim, {
+        toValue: 0.95,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 4,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Dispatch theme change
     dispatch(setThemeMode(selectedMode));
   };
 
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={[styles.container, { transform: [{ scale: scaleAnim }] }]}
+    >
       <Text style={styles.title}>Theme</Text>
       <View style={styles.optionsContainer}>
         {options.map(option => (
@@ -38,7 +64,7 @@ const ThemeSwitcher: React.FC = () => {
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
