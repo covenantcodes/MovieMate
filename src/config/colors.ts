@@ -36,16 +36,45 @@ export const colors = {
   },
   
   // Semantic colors
-  success: '#4CAF50',
-  warning: '#FF9800',
-  error: '#F44336',
-  info: '#2196F3',
+  success: {
+    main: '#4CAF50',
+    light: '#81C784',
+    dark: '#388E3C',
+  },
+  warning: {
+    main: '#FF9800',
+    light: '#FFB74D',
+    dark: '#F57C00',
+  },
+  error: {
+    main: '#F44336',
+    light: '#E57373',
+    dark: '#D32F2F',
+  },
+  info: {
+    main: '#2196F3',
+    light: '#64B5F6',
+    dark: '#1976D2',
+  },
 
   // Background and text colors
   background: {
     light: '#FFFFFF',
     dark: '#121212',
   },
+  
+  // Card colors
+  card: {
+    light: '#FFFFFF',
+    dark: '#1E1E1E',
+  },
+  
+  // Border colors
+  border: {
+    light: '#E0E0E0',
+    dark: '#333333',
+  },
+  
   text: {
     light: {
       primary: '#212121',
@@ -79,6 +108,8 @@ export const theme = {
     colors: {
       ...colors,
       background: colors.background.light,
+      card: colors.card.light,
+      border: colors.border.light,
       text: colors.text.light,
     },
   },
@@ -86,6 +117,8 @@ export const theme = {
     colors: {
       ...colors,
       background: colors.background.dark,
+      card: colors.card.dark,
+      border: colors.border.dark,
       text: colors.text.dark,
     },
   },
