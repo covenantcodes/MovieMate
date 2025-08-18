@@ -1,14 +1,15 @@
 import { MMKV } from 'react-native-mmkv';
+import env from '../config/env';
 
 // Initialize storage
 export const storage = new MMKV({
   id: 'moviemate-storage',
 });
 
-// API Constants
-const API_KEY = '13432e4bd810325fe35c9f96dfd0ee94';
-const BASE_URL = 'https://api.themoviedb.org/3';
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
+// API Constants from environment configuration
+const API_KEY = env.TMDB_API_KEY;
+const BASE_URL = env.API_URL;
+const IMAGE_BASE_URL = env.IMAGE_BASE_URL;
 
 // Image sizes
 export const IMAGE_SIZES = {
@@ -34,7 +35,7 @@ export const IMAGE_SIZES = {
 
 // Headers for authentication
 const headers = {
-  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMzQzMmU0YmQ4MTAzMjVmZTM1YzlmOTZkZmQwZWU5NCIsIm5iZiI6MTc1NTE4NzAzOS45MTUsInN1YiI6IjY4OWUwNzVmODNlNGE4ZTNmYzVkMmE2NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JMaNG4gsMHrbb6LJxQ8hofn1R_1M3aQMRxzYYDNoVEk',
+  'Authorization': `Bearer ${env.TMDB_API_TOKEN}`,
   'Content-Type': 'application/json',
 };
 
