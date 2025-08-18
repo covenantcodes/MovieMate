@@ -10,7 +10,7 @@ export type RootStackParamList = {
   SearchMain: undefined;
   FavoritesMain: undefined;
   SettingsMain: undefined;
-  
+  Splash: undefined;
   // Detail screens
   MovieDetails: { movieId: number };
   MovieList: { 

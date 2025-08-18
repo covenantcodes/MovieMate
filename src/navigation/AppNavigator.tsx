@@ -13,6 +13,7 @@ import FavoritesScreen from '../screens/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 import MovieListScreen from '../screens/MovieListScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 // Import custom tab bar
 import TabBar from '../components/TabBar';
@@ -182,7 +183,13 @@ function MainTabNavigator() {
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <MainTabNavigator />
+      <Stack.Navigator
+        initialRouteName="Splash"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="Home" component={MainTabNavigator} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

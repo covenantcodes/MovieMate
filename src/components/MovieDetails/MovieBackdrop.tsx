@@ -36,10 +36,7 @@ const MovieBackdrop: React.FC<MovieBackdropProps> = ({
 }) => {
   return (
     <ImageBackground source={{ uri: imageUrl }} style={styles.backdrop}>
-      <LinearGradient
-        colors={['transparent', 'rgba(0,0,0,0.8)', themeColors.background]}
-        style={styles.gradient}
-      >
+      <LinearGradient colors={['transparent']} style={styles.gradient}>
         {/* Back button */}
         <TouchableOpacity style={styles.backButton} onPress={onBack}>
           <Icon name="arrow-back" size={24} color="white" />
@@ -82,12 +79,12 @@ const styles = StyleSheet.create({
   gradient: {
     flex: 1,
     justifyContent: 'space-between',
-    paddingTop: 50,
+    paddingTop: 5,
     paddingBottom: 20,
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 5,
     left: 16,
     zIndex: 10,
     width: 40,
