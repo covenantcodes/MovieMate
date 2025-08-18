@@ -11,6 +11,7 @@ import {
   FlatList,
   Linking,
   Share,
+  Platform,
 } from 'react-native';
 import { useAppSelector } from '../redux/hooks';
 import { theme, colors } from '../config/colors';
@@ -337,80 +338,233 @@ const MovieDetailsScreen = ({ route, navigation }) => {
             </View>
           )}
 
-          {/* Movie info details */}
+          {/* Movie info details - Redesigned */}
           <View style={styles.movieInfoContainer}>
             <Text variant="heading2" style={styles.sectionTitle}>
               Details
             </Text>
 
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Status</Text>
-              <Text
-                style={[
-                  styles.infoValue,
-                  { color: themeMode.colors.text.primary },
-                ]}
-              >
-                {movie.status}
-              </Text>
-            </View>
-
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Release Date</Text>
-              <Text
-                style={[
-                  styles.infoValue,
-                  { color: themeMode.colors.text.primary },
-                ]}
-              >
-                {formatDate(movie.release_date)}
-              </Text>
-            </View>
-
-            {movie.budget > 0 && (
-              <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Budget</Text>
-                <Text
-                  style={[
-                    styles.infoValue,
-                    { color: themeMode.colors.text.primary },
-                  ]}
-                >
-                  {formatCurrency(movie.budget)}
-                </Text>
-              </View>
-            )}
-
-            {movie.revenue > 0 && (
-              <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Revenue</Text>
-                <Text
-                  style={[
-                    styles.infoValue,
-                    { color: themeMode.colors.text.primary },
-                  ]}
-                >
-                  {formatCurrency(movie.revenue)}
-                </Text>
-              </View>
-            )}
-
-            {movie.production_companies &&
-              movie.production_companies.length > 0 && (
-                <View style={styles.infoRow}>
-                  <Text style={styles.infoLabel}>Studios</Text>
-                  <Text
-                    style={[
-                      styles.infoValue,
-                      { color: themeMode.colors.text.primary },
-                    ]}
-                  >
-                    {movie.production_companies
-                      .map(company => company.name)
-                      .join(', ')}
-                  </Text>
+            <View
+              style={[
+                styles.detailCard,
+                { backgroundColor: themeMode.colors.card },
+              ]}
+            >
+              {/* Main details */}
+              <View style={styles.detailSection}>
+                <View style={styles.detailItem}>
+                  <Icon
+                    name="calendar-outline"
+                    size={20}
+                    color={colors.primary.main}
+                  />
+                  <View style={styles.detailTextContainer}>
+                    <Text style={styles.detailLabel}>Release Date</Text>
+                    <Text
+                      style={[
+                        styles.detailValue,
+                        { color: themeMode.colors.text.primary },
+                      ]}
+                    >
+                      {formatDate(movie.release_date)}
+                    </Text>
+                  </View>
                 </View>
+
+                {movie.runtime > 0 && (
+                  <View style={styles.detailItem}>
+                    <Icon
+                      name="time-outline"
+                      size={20}
+                      color={colors.primary.main}
+                    />
+                    <View style={styles.detailTextContainer}>
+                      <Text style={styles.detailLabel}>Runtime</Text>
+                      <Text
+                        style={[
+                          styles.detailValue,
+                          { color: themeMode.colors.text.primary },
+                        ]}
+                      >
+                        {formatRuntime(movie.runtime)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+
+                <View style={styles.detailItem}>
+                  <Icon
+                    name="stats-chart-outline"
+                    size={20}
+                    color={colors.primary.main}
+                  />
+                  <View style={styles.detailTextContainer}>
+                    <Text style={styles.detailLabel}>Status</Text>
+                    <Text
+                      style={[
+                        styles.detailValue,
+                        { color: themeMode.colors.text.primary },
+                      ]}
+                    >
+                      {movie.status}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              {/* Divider */}
+              <View
+                style={[
+                  styles.divider,
+                  { backgroundColor: themeMode.colors.border },
+                ]}
+              />
+
+              {/* Financial information */}
+              <View style={styles.detailSection}>
+                {movie.budget > 0 && (
+                  <View style={styles.detailItem}>
+                    <Icon
+                      name="cash-outline"
+                      size={20}
+                      color={colors.success}
+                    />
+                    <View style={styles.detailTextContainer}>
+                      <Text style={styles.detailLabel}>Budget</Text>
+                      <Text
+                        style={[
+                          styles.detailValue,
+                          { color: themeMode.colors.text.primary },
+                        ]}
+                      >
+                        {formatCurrency(movie.budget)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+
+                {movie.revenue > 0 && (
+                  <View style={styles.detailItem}>
+                    <Icon
+                      name="trending-up-outline"
+                      size={20}
+                      color={
+                        movie.revenue > movie.budget
+                          ? colors.success
+                          : colors.error
+                      }
+                    />
+                    <View style={styles.detailTextContainer}>
+                      <Text style={styles.detailLabel}>Revenue</Text>
+                      <Text
+                        style={[
+                          styles.detailValue,
+                          { color: themeMode.colors.text.primary },
+                        ]}
+                      >
+                        {formatCurrency(movie.revenue)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+
+                {movie.revenue > 0 && movie.budget > 0 && (
+                  <View style={styles.detailItem}>
+                    <Icon
+                      name={
+                        movie.revenue > movie.budget
+                          ? 'trophy-outline'
+                          : 'trending-down-outline'
+                      }
+                      size={20}
+                      color={
+                        movie.revenue > movie.budget
+                          ? colors.success
+                          : colors.error
+                      }
+                    />
+                    <View style={styles.detailTextContainer}>
+                      <Text style={styles.detailLabel}>Profit</Text>
+                      <Text
+                        style={[
+                          styles.detailValue,
+                          {
+                            color:
+                              movie.revenue > movie.budget
+                                ? colors.success
+                                : colors.error,
+                          },
+                        ]}
+                      >
+                        {formatCurrency(movie.revenue - movie.budget)}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+              </View>
+
+              {/* Divider */}
+              {(movie.production_companies?.length > 0 ||
+                movie.production_countries?.length > 0) && (
+                <View
+                  style={[
+                    styles.divider,
+                    { backgroundColor: themeMode.colors.border },
+                  ]}
+                />
               )}
+
+              {/* Production information */}
+              <View style={styles.detailSection}>
+                {movie.production_companies &&
+                  movie.production_companies.length > 0 && (
+                    <View style={styles.detailItem}>
+                      <Icon
+                        name="business-outline"
+                        size={20}
+                        color={colors.primary.main}
+                      />
+                      <View style={styles.detailTextContainer}>
+                        <Text style={styles.detailLabel}>Studios</Text>
+                        <Text
+                          style={[
+                            styles.detailValue,
+                            { color: themeMode.colors.text.primary },
+                          ]}
+                        >
+                          {movie.production_companies
+                            .map(company => company.name)
+                            .join(', ')}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+
+                {movie.production_countries &&
+                  movie.production_countries.length > 0 && (
+                    <View style={styles.detailItem}>
+                      <Icon
+                        name="globe-outline"
+                        size={20}
+                        color={colors.primary.main}
+                      />
+                      <View style={styles.detailTextContainer}>
+                        <Text style={styles.detailLabel}>Countries</Text>
+                        <Text
+                          style={[
+                            styles.detailValue,
+                            { color: themeMode.colors.text.primary },
+                          ]}
+                        >
+                          {movie.production_countries
+                            .map(country => country.name)
+                            .join(', ')}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+              </View>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -561,7 +715,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.regular,
   },
   sectionTitle: {
-    marginBottom: 12,
+    marginBottom: 8,
     marginTop: 16,
   },
   overview: {
@@ -595,26 +749,50 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   movieInfoContainer: {
-    marginBottom: 24,
+    marginBottom: 20,
   },
-  infoRow: {
+  detailCard: {
+    borderRadius: 16,
+    padding: 12,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  detailSection: {
+    marginVertical: 0,
+  },
+  detailItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.neutral.grey300,
+    alignItems: 'center',
+    marginVertical: 6,
   },
-  infoLabel: {
-    fontFamily: FONT_FAMILY.medium,
-    fontSize: 16,
-    color: colors.neutral.grey600,
-  },
-  infoValue: {
+  detailTextContainer: {
+    marginLeft: 10,
     flex: 1,
+  },
+  detailLabel: {
+    fontFamily: FONT_FAMILY.medium,
+    fontSize: 13,
+    color: colors.neutral.grey600,
+    marginBottom: 0,
+  },
+  detailValue: {
     fontFamily: FONT_FAMILY.regular,
-    fontSize: 16,
-    textAlign: 'right',
-    marginLeft: 8,
+    fontSize: 15,
+    marginTop: 1,
+  },
+  divider: {
+    height: 1,
+    width: '100%',
+    marginVertical: 8,
   },
 });
 
