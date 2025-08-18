@@ -60,7 +60,7 @@ export interface MovieDetails extends Movie {
   homepage: string;
   imdb_id: string;
   production_companies: { id: number; logo_path: string; name: string; origin_country: string }[];
-  production_countries: {iso_2166_1: string; name: string}[];
+  production_countries: {iso_3166_1: string; name: string}[];
   revenue: number;
   runtime: number;
   status: string;
