@@ -84,6 +84,10 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        
+        buildConfigField "String", "TMDB_API_KEY", "\"${System.getenv('TMDB_API_KEY') ?: ''}\""
+        buildConfigField "String", "TMDB_API_TOKEN", "\"${System.getenv('TMDB_API_TOKEN') ?: ''}\""
     }
     signingConfigs {
         debug {
