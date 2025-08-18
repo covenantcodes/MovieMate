@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useAppSelector } from '../redux/hooks';
 import { theme, colors } from '../config/colors';
+import { Platform } from 'react-native';
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -10,8 +11,8 @@ import SearchScreen from '../screens/SearchScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
-// Import icons
-import Icon from 'react-native-vector-icons/Ionicons';
+// Import custom tab bar
+import TabBar from '../components/TabBar';
 import { FONT_FAMILY } from '../config/fonts';
 
 // Create bottom tab navigator
@@ -24,71 +25,25 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        tabBar={props => <TabBar {...props} />}
         screenOptions={{
-          tabBarActiveTintColor: colors.primary.main,
-          tabBarInactiveTintColor: themeMode.colors.text.secondary,
-          tabBarStyle: {
-            backgroundColor: themeMode.colors.background,
-            borderTopColor: isDark
-              ? colors.neutral.grey800
-              : colors.neutral.grey300,
-            paddingBottom: 5,
-            paddingTop: 5,
-            height: 60,
-          },
           headerStyle: {
             backgroundColor: themeMode.colors.background,
-            shadowColor: 'transparent', // iOS
-            elevation: 0, // Android
+            shadowColor: 'transparent',
+            elevation: 0,
           },
           headerTintColor: themeMode.colors.text.primary,
           headerTitleStyle: {
             fontFamily: FONT_FAMILY.semiBold,
             fontSize: 18,
           },
-          tabBarLabelStyle: {
-            fontFamily: FONT_FAMILY.medium,
-            fontSize: 12,
-            paddingBottom: 5,
-          },
+          tabBarShowLabel: false,
         }}
       >
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="home-outline" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="search-outline" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Favorites"
-          component={FavoritesScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="heart-outline" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="settings-outline" size={size} color={color} />
-            ),
-          }}
-        />
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Favorites" component={FavoritesScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

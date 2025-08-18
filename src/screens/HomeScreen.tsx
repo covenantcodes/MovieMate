@@ -4,7 +4,6 @@ import Text from '../components/Text';
 import { useAppSelector } from '../redux/hooks';
 import { theme } from '../config/colors';
 import { FONT_FAMILY } from '../config/fonts';
-import FontTester from '../components/FontTester';
 
 const HomeScreen = () => {
   const { isDark } = useAppSelector(state => state.theme);
