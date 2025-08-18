@@ -20,11 +20,32 @@ import Text from '../components/Text';
 import { LinearGradient } from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FONT_FAMILY } from '../config/fonts';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/types';
 
 const { width, height } = Dimensions.get('window');
 const backdropHeight = height * 0.4;
 
-const MovieDetailsScreen = ({ route, navigation }) => {
+type MovieDetailsScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'MovieDetails'
+>;
+
+type MovieDetailsScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'MovieDetails'
+>;
+
+interface MovieDetailsScreenProp {
+  navigation: MovieDetailsScreenNavigationProp;
+  route: MovieDetailsScreenRouteProp;
+}
+
+const MovieDetailsScreen: React.FC<MovieDetailsScreenProp> = ({
+  route,
+  navigation,
+}) => {
   const { movieId } = route.params;
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
