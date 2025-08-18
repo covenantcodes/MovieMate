@@ -23,40 +23,41 @@ const HomeScreen = ({ navigation }) => {
   const themeMode = isDark ? theme.dark : theme.light;
 
   // State variables
-  const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
+  const [recommended, setRecommended] = useState<Movie[]>([]);
   const [popular, setPopular] = useState<Movie[]>([]);
   const [topRated, setTopRated] = useState<Movie[]>([]);
   const [upcoming, setUpcoming] = useState<Movie[]>([]);
   const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState({
-    nowPlaying: true,
+    recommended: true,
     popular: true,
     topRated: true,
     upcoming: true,
   });
   const [refreshing, setRefreshing] = useState(false);
 
-  // Load initial data
   const loadMovies = useCallback(async () => {
     try {
-      // Load now playing movies
       const nowPlayingResponse = await tmdbApi.getNowPlayingMovies();
-      setNowPlaying(nowPlayingResponse.results);
 
-      // Select a random movie for the hero banner
       const randomIndex = Math.floor(
         Math.random() * Math.min(5, nowPlayingResponse.results.length),
       );
       setFeaturedMovie(nowPlayingResponse.results[randomIndex]);
 
-      // Load other movie categories
-      const [popularResponse, topRatedResponse, upcomingResponse] =
-        await Promise.all([
-          tmdbApi.getPopularMovies(),
-          tmdbApi.getTopRatedMovies(),
-          tmdbApi.getUpcomingMovies(),
-        ]);
+      const [
+        recommendedResponse,
+        popularResponse,
+        topRatedResponse,
+        upcomingResponse,
+      ] = await Promise.all([
+        tmdbApi.getRecommendedMovies(),
+        tmdbApi.getPopularMovies(),
+        tmdbApi.getTopRatedMovies(),
+        tmdbApi.getUpcomingMovies(),
+      ]);
 
+      setRecommended(recommendedResponse.results);
       setPopular(popularResponse.results);
       setTopRated(topRatedResponse.results);
       setUpcoming(upcomingResponse.results);
@@ -64,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
       console.error('Error loading movies:', error);
     } finally {
       setLoading({
-        nowPlaying: false,
+        recommended: false,
         popular: false,
         topRated: false,
         upcoming: false,
@@ -79,7 +80,6 @@ const HomeScreen = ({ navigation }) => {
     loadMovies();
   }, [loadMovies]);
 
-  // Load movies when screen comes into focus
   useFocusEffect(
     useCallback(() => {
       loadMovies();
@@ -108,22 +108,22 @@ const HomeScreen = ({ navigation }) => {
       />
 
       {/* Hero Banner */}
-      <HeroBanner movie={featuredMovie} loading={loading.nowPlaying} />
+      <HeroBanner movie={featuredMovie} loading={loading.recommended} />
 
-      {/* Now Playing Section */}
+      {/* Recommended Section - Replaced Now Playing */}
       <View style={styles.section}>
         <SectionHeader
-          title="Now Playing"
+          title="Recommended for You"
           onSeeAll={() =>
             navigation.navigate('MovieList', {
-              type: 'now_playing',
-              title: 'Now Playing',
+              type: 'recommended',
+              title: 'Recommended for You',
             })
           }
         />
         <MovieList
-          movies={nowPlaying}
-          loading={loading.nowPlaying}
+          movies={recommended}
+          loading={loading.recommended}
           size="medium"
         />
       </View>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   section: {
-    marginBottom: 8,
+    marginBottom: 0,
   },
 });
 

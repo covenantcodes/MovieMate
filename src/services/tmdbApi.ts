@@ -206,5 +206,46 @@ export const tmdbApi = {
       const favorites = tmdbApi.favorites.getAll();
       return favorites.some(movie => movie.id === movieId);
     }
-  }
+  },
+
+  
+  getRecommendedMovies: async (page: number = 1): Promise<MovieResponse> => {
+    try {
+      
+      const [popularResponse, topRatedResponse] = await Promise.all([
+        tmdbApi.getPopularMovies(page),
+        tmdbApi.getTopRatedMovies(page)
+      ]);
+      
+      
+      const combinedMovies = [
+        ...popularResponse.results.filter(movie => movie.vote_average >= 7.0),
+        ...topRatedResponse.results.filter(movie => movie.popularity > 50)
+      ];
+      
+     
+      const uniqueMovies = Array.from(
+        new Map(combinedMovies.map(movie => [movie.id, movie])).values()
+      );
+      
+    
+      const recommendedMovies = uniqueMovies
+        .sort((a, b) => {
+          const scoreA = a.vote_average * 10 + a.popularity/10;
+          const scoreB = b.vote_average * 10 + b.popularity/10;
+          return scoreB - scoreA;
+        })
+        .slice(0, 20); 
+      
+      return {
+        page: 1,
+        results: recommendedMovies,
+        total_pages: 1,
+        total_results: recommendedMovies.length
+      };
+    } catch (error) {
+      console.error('Error fetching recommended movies:', error);
+      throw error;
+    }
+  },
 };

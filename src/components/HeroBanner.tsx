@@ -11,9 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Movie, IMAGE_SIZES, tmdbApi } from '../services/tmdbApi';
 import Text from './Text';
-import { LinearGradient } from 'expo-linear-gradient';
-import { colors } from '../config/colors';
-import { FONT_FAMILY } from '../config/fonts';
+import { LinearGradient } from 'react-native-linear-gradient';
+import { colors, theme } from '../config/colors';
+import { FONT_FAMILY, FONT_SIZE, LINE_HEIGHT } from '../config/fonts';
+import { useAppSelector } from '../redux/hooks';
 
 interface HeroBannerProps {
   movie: Movie | null;
@@ -21,10 +22,12 @@ interface HeroBannerProps {
 }
 
 const { width, height } = Dimensions.get('window');
-const bannerHeight = height * 0.4;
+const bannerHeight = height * 0.6;
 
 const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
   const navigation = useNavigation();
+  const { isDark } = useAppSelector(state => state.theme);
+  const themeMode = isDark ? theme.dark : theme.light;
 
   const handlePress = () => {
     if (movie) {
@@ -70,22 +73,23 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
           style={styles.gradient}
         >
           <View style={styles.content}>
-            <Text style={styles.title} numberOfLines={2}>
+            <Text variant="heading1" style={styles.title} numberOfLines={2}>
               {movie.title}
             </Text>
-            <Text style={styles.overview} numberOfLines={2}>
+
+            <Text variant="body2" style={styles.overview} numberOfLines={2}>
               {movie.overview}
             </Text>
 
             <View style={styles.infoRow}>
               <View style={styles.ratingContainer}>
-                <Icon name="star" size={16} color={colors.warning.main} />
-                <Text style={styles.rating}>
+                <Icon name="star" size={16} color={colors.warning} />
+                <Text variant="caption" style={styles.rating}>
                   {movie.vote_average.toFixed(1)}
                 </Text>
               </View>
 
-              <Text style={styles.releaseDate}>
+              <Text variant="caption" style={styles.releaseDate}>
                 {new Date(movie.release_date).getFullYear()}
               </Text>
 
@@ -96,7 +100,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
                 <Icon
                   name={isFavorite ? 'heart' : 'heart-outline'}
                   size={18}
-                  color={isFavorite ? colors.error.main : 'white'}
+                  color={isFavorite ? colors.error : colors.neutral.white}
                 />
               </TouchableOpacity>
             </View>
@@ -129,15 +133,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    color: 'white',
-    fontSize: 22,
-    fontFamily: FONT_FAMILY.bold,
+    color: colors.neutral.white,
     marginBottom: 4,
   },
   overview: {
     color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 14,
-    fontFamily: FONT_FAMILY.regular,
     marginBottom: 8,
   },
   infoRow: {
@@ -151,13 +151,11 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   rating: {
-    color: 'white',
+    color: colors.neutral.white,
     marginLeft: 4,
-    fontFamily: FONT_FAMILY.medium,
   },
   releaseDate: {
     color: 'rgba(255, 255, 255, 0.8)',
-    fontFamily: FONT_FAMILY.regular,
   },
   favoriteButton: {
     marginLeft: 'auto',

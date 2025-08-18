@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 16,
-    marginBottom: 8,
-    marginTop: 16,
+    marginBottom: 4,
+    marginTop: 8,
   },
   seeAllButton: {
     flexDirection: 'row',

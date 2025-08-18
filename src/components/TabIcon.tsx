@@ -105,8 +105,8 @@ const TabIcon: React.FC<TabIconProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 48,
-    height: 48,
+    width: 44,
+    height: 44,
     justifyContent: 'center',
     alignItems: 'center',
   },
