@@ -1,97 +1,180 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🎬 MovieMate
 
-# Getting Started
+MovieMate is a **React Native application** that serves as a personal movie companion. It allows users to browse popular movies, search for specific titles, view detailed information, and save favorites. Built with **modern React Native practices**, **Redux Toolkit**, and integrated with **The Movie Database (TMDB) API**, MovieMate provides a smooth, responsive, and theme-aware movie browsing experience.  
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 📑 Table of Contents
+- [🎬 MovieMate](#-moviemate)
+  - [📑 Table of Contents](#-table-of-contents)
+  - [✨ Features](#-features)
+  - [🛠 Tech Stack](#-tech-stack)
+  - [📂 Project Structure](#-project-structure)
+  - [⚙️ Installation](#️-installation)
+    - [Requirements](#requirements)
+    - [Setup Steps](#setup-steps)
+  - [▶️ Usage](#️-usage)
+  - [🖼 Screens](#-screens)
+  - [🧩 Key Components](#-key-components)
+  - [🗂 State Management](#-state-management)
+  - [🌐 API Integration](#-api-integration)
+  - [🎨 Theming](#-theming)
+  - [🚀 Future Improvements](#-future-improvements)
+  - [🛠 Troubleshooting](#-troubleshooting)
+  - [📜 License](#-license)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+---
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## ✨ Features
+- Browse **popular, top-rated, and upcoming movies**
+- Search movies by title with **debounced input**
+- View detailed information including **cast, budget, revenue, and trailers**
+- Save favorite movies with **local persistence (MMKV)**
+- **Light, dark, and system themes** with Redux-based state
+- Smooth **animations** (Reanimated) & lazy loading for images
+- **Offline-friendly favorites** management
+- **Cross-platform splash screen** and safe area handling  
 
-```sh
-# Using npm
+---
+
+## 🛠 Tech Stack
+- **React Native**: v0.81.0  
+- **Redux Toolkit**: For state management  
+- **React Navigation v7**: Navigation and routing  
+- **TMDB API**: Movie database integration  
+- **MMKV**: Local storage  
+- **React Native Vector Icons (Ionicons)**: Icon set  
+- **Reanimated**: Animations  
+- **StyleSheet + Custom Theming**: Styling system  
+
+---
+
+## 📂 Project Structure
+```
+MovieMate/
+├── src/
+│   ├── components/        # Reusable UI components
+│   ├── config/            # App configuration (colors, fonts, images)
+│   ├── navigation/        # Navigation setup
+│   ├── redux/             # Redux state management
+│   ├── screens/           # Main app screens
+│   └── services/          # API services and utilities
+├── assets/                # Static assets (images, fonts)
+├── ios/                   # iOS-specific native code
+└── android/               # Android-specific native code
+```
+
+---
+
+## ⚙️ Installation
+
+### Requirements
+- **Node.js >=18**
+- **React Native environment** (CLI, Metro bundler, etc.)
+- **Xcode** (for iOS development)
+- **Android Studio** (for Android development)
+
+### Setup Steps
+```bash
+# Clone repository
+git clone https://github.com/your-username/MovieMate.git
+cd MovieMate
+
+# Install dependencies
+npm install
+
+# iOS setup
+cd ios && bundle exec pod install && cd ..
+
+# Start Metro bundler
 npm start
 
-# OR using Yarn
-yarn start
+# Run app
+npm run ios      # iOS
+npm run android  # Android
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## ▶️ Usage
+- Launch the app to see the **HomeScreen** with popular, top-rated, and upcoming movies.  
+- Tap on a movie card to view **details, cast, trailers, and metadata**.  
+- Use the **search screen** to look up specific titles.  
+- Save favorites to access them later, even offline.  
+- Switch between **light/dark/system themes** via Settings.  
 
-### Android
+---
 
-```sh
-# Using npm
-npm run android
+## 🖼 Screens
+- **HomeScreen** – Featured movie + lists of categories  
+- **MovieDetailsScreen** – Details, cast, budget, trailer integration  
+- **SearchScreen** – Debounced search with results grid  
+- **MovieListScreen** – Paginated grid by category  
+- **FavoritesScreen** – Saved movies with persistence  
+- **SettingsScreen** – Theme switcher, cache clearing  
+- **SplashScreen** – Animated loading on app start  
 
-# OR using Yarn
-yarn android
-```
+---
 
-### iOS
+## 🧩 Key Components
+- **Text** – Theme-aware typography system  
+- **MovieCard** – Movie poster, rating, and favorite toggle  
+- **MovieList** – Horizontal/grid scrolling with pagination  
+- **HeroBanner** – Featured movie with gradient overlay  
+- **SectionHeader** – Section titles with navigation  
+- **ThemeSwitcher** – Light/Dark/System toggle  
+- **MovieBackdrop** – Full-width backdrop with actions  
+- **MovieHeader** – Poster, title, rating, genres  
+- **MovieCast** – Horizontal list of cast members  
+- **MovieDetailsTable** – Budget, revenue, production info  
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+---
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+## 🗂 State Management
+- **Redux Toolkit** for global state:  
+  - `themeSlice`: Manages theme state  
+  - `moviesSlice`: Handles API data and loading states  
 
-```sh
-bundle install
-```
+---
 
-Then, and every time you update your native dependencies, run:
+## 🌐 API Integration
+**TMDB API v3 Endpoints Used**:
+- `/movie/popular`
+- `/movie/top_rated`
+- `/movie/upcoming`
+- `/movie/now_playing`
+- `/movie/{id}`
+- `/search/movie`
 
-```sh
-bundle exec pod install
-```
+All requests are authenticated using an **API key** stored in config.
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+---
 
-```sh
-# Using npm
-npm run ios
+## 🎨 Theming
+- **Light & Dark mode support**  
+- **System theme detection**  
+- **Consistent colors and typography** (`colors.ts`, `fonts.ts`)  
+- Uses **react-native-safe-area-context** for notched devices  
 
-# OR using Yarn
-yarn ios
-```
+---
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 🚀 Future Improvements
+- User authentication  
+- Watchlists  
+- TV shows support  
+- Enhanced offline capabilities  
+- Reviews and ratings  
+- Advanced filtering  
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+## 🛠 Troubleshooting
+- **Metro bundler issues**: Try `npm start --reset-cache`  
+- **iOS pod errors**: Run `cd ios && pod install`  
+- **Android build errors**: Check SDK + NDK versions in Android Studio  
+- **TMDB API errors**: Ensure API key is correctly set in config  
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 📜 License
+This project is licensed under the **MIT License**.  
