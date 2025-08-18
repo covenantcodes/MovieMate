@@ -26,6 +26,7 @@ const TabIcon: React.FC<TabIconProps> = ({
 }) => {
   // Animation values
   const scale = useSharedValue(1);
+  const backgroundScale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const animatedColor = useSharedValue(isFocused ? 1 : 0);
 
@@ -33,10 +34,12 @@ const TabIcon: React.FC<TabIconProps> = ({
   useEffect(() => {
     if (isFocused) {
       scale.value = withSpring(1.2, { damping: 10, stiffness: 100 });
+      backgroundScale.value = withSpring(1, { damping: 10, stiffness: 100 });
       opacity.value = withTiming(1, { duration: 200 });
       animatedColor.value = withTiming(1, { duration: 200 });
     } else {
       scale.value = withSpring(1, { damping: 10, stiffness: 100 });
+      backgroundScale.value = withSpring(0, { damping: 10, stiffness: 100 });
       opacity.value = withTiming(0, { duration: 150 });
       animatedColor.value = withTiming(0, { duration: 200 });
     }
@@ -54,7 +57,8 @@ const TabIcon: React.FC<TabIconProps> = ({
 
   const backgroundStyle = useAnimatedStyle(() => {
     return {
-      opacity: opacity.value * 0.2,
+      opacity: opacity.value * 0.15,
+      transform: [{ scale: backgroundScale.value }],
       backgroundColor: color,
     };
   });
@@ -83,16 +87,16 @@ const TabIcon: React.FC<TabIconProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
   },
   background: {
     position: 'absolute',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
   },
 });
 
