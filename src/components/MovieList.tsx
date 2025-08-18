@@ -5,6 +5,8 @@ import {
   ActivityIndicator,
   View,
   Dimensions,
+  ListRenderItemInfo,
+  ListRenderItem,
 } from 'react-native';
 import { Movie } from '../services/tmdbApi';
 import MovieCard from './MovieCard';
@@ -17,7 +19,6 @@ import Animated, {
   Layout,
 } from 'react-native-reanimated';
 
-// Create an animated version of FlatList
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 interface MovieListProps {
@@ -43,7 +44,7 @@ const MovieList: React.FC<MovieListProps> = ({
 }) => {
   // Animation values
   const listOpacity = useSharedValue(0);
-  const listRef = useRef<FlatList>(null);
+  const listRef = useRef<FlatList<Movie>>(null);
 
   useEffect(() => {
     if (movies.length > 0 && !loading) {
@@ -65,7 +66,8 @@ const MovieList: React.FC<MovieListProps> = ({
     );
   }
 
-  const renderItem = ({ item, index }: { item: Movie; index: number }) => {
+  // Update renderItem to match the expected ListRenderItem type
+  const renderItem: ListRenderItem<Movie> = ({ item, index }) => {
     const delay = horizontal ? index * 200 : Math.floor(index / 2) * 200;
 
     return (
@@ -91,9 +93,9 @@ const MovieList: React.FC<MovieListProps> = ({
     <Animated.View style={[listAnimatedStyle, styles.container]}>
       <AnimatedFlatList
         ref={listRef}
-        data={movies}
-        keyExtractor={item => item.id.toString()}
-        renderItem={renderItem}
+        data={movies as any}
+        keyExtractor={(item: Movie) => item.id.toString()}
+        renderItem={renderItem as any}
         horizontal={horizontal}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={[
