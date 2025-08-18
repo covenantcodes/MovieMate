@@ -1,5 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { FlatList, StyleSheet, ActivityIndicator, View, Dimensions } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+  Dimensions,
+} from 'react-native';
 import { Movie } from '../services/tmdbApi';
 import MovieCard from './MovieCard';
 import { colors } from '../config/colors';
@@ -7,10 +13,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  withDelay,
-  withSpring,
-  FadeIn,
-  SlideInRight,
+  SlideInDown,
   Layout,
 } from 'react-native-reanimated';
 
@@ -40,27 +43,20 @@ const MovieList: React.FC<MovieListProps> = ({
 }) => {
   // Animation values
   const listOpacity = useSharedValue(0);
-  const listTranslateY = useSharedValue(50);
   const listRef = useRef<FlatList>(null);
-  
-  // Trigger entrance animation when movies are loaded
+
   useEffect(() => {
     if (movies.length > 0 && !loading) {
-      listOpacity.value = withTiming(1, { duration: 500 });
-      listTranslateY.value = withSpring(0, {
-        damping: 12,
-        stiffness: 100,
-      });
+      listOpacity.value = withTiming(1, { duration: 400 });
     }
   }, [movies, loading]);
-  
+
   const listAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity: listOpacity.value,
-      transform: [{ translateY: listTranslateY.value }],
     };
   });
-  
+
   if (loading && movies.length === 0) {
     return (
       <View style={styles.loaderContainer}>
@@ -69,14 +65,16 @@ const MovieList: React.FC<MovieListProps> = ({
     );
   }
 
-  // Render item with animation
   const renderItem = ({ item, index }: { item: Movie; index: number }) => {
-    // Delay each item's animation based on its position
-    const delay = horizontal ? index * 100 : Math.floor(index / 2) * 100;
-    
+    const delay = horizontal ? index * 200 : Math.floor(index / 2) * 200;
+
     return (
       <Animated.View
-        entering={FadeIn.delay(delay).springify()}
+        entering={SlideInDown.springify()
+          .delay(delay)
+          .damping(14)
+          .mass(1.2)
+          .stiffness(80)}
         layout={Layout.springify()}
       >
         <MovieCard
@@ -106,8 +104,8 @@ const MovieList: React.FC<MovieListProps> = ({
         onEndReachedThreshold={0.5}
         ListFooterComponent={
           loading ? (
-            <Animated.View 
-              entering={FadeIn}
+            <Animated.View
+              entering={SlideInDown.delay(100)}
               style={styles.footerLoader}
             >
               <ActivityIndicator size="small" color={colors.primary.main} />
@@ -116,16 +114,17 @@ const MovieList: React.FC<MovieListProps> = ({
         }
         numColumns={horizontal ? 1 : 2}
         key={horizontal ? 'horizontal' : 'vertical'}
-        // Add smooth scrolling behaviors
         scrollEventThrottle={16}
         decelerationRate={0.98}
         snapToAlignment="center"
-        // Add bonus behavior for horizontal lists
-        ...(horizontal && {
-          snapToInterval: width * (size === 'small' ? 0.28 : size === 'large' ? 0.42 : 0.35) + 12,
-          disableIntervalMomentum: true,
-          showsHorizontalScrollIndicator: false,
-        })
+        snapToInterval={
+          horizontal
+            ? width *
+                (size === 'small' ? 0.28 : size === 'large' ? 0.42 : 0.35) +
+              12
+            : undefined
+        }
+        disableIntervalMomentum={horizontal ? true : undefined}
       />
     </Animated.View>
   );

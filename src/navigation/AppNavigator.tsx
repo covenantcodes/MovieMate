@@ -50,7 +50,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="MovieDetails"
         component={MovieDetailsScreen}
-        options={{ headerTitle: '' }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="MovieList"
