@@ -216,7 +216,6 @@ const MovieDetailsScreen: React.FC<MovieDetailsScreenProps> = ({
       style={{ flex: 1, backgroundColor: themeMode.colors.background }}
     >
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Backdrop with actions */}
         <MovieBackdrop
           imageUrl={backdropUrl}
           onBack={() => navigation.goBack()}
