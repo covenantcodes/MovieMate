@@ -70,13 +70,14 @@ const ThemeSwitcher: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
-    padding: 16,
+    marginVertical: 0, // Changed from 16
+    padding: 0, // Changed from 16
   },
   title: {
     fontSize: 18,
     fontFamily: FONT_FAMILY.semiBold,
     marginBottom: 12,
+    display: 'none', // Hide the title since we already have it in Settings
   },
   optionsContainer: {
     flexDirection: 'row',

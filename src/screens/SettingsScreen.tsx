@@ -7,7 +7,7 @@ import {
   Image,
   Linking,
   Platform,
-  Switch,
+  SafeAreaView,
 } from 'react-native';
 import Text from '../components/Text';
 import { useAppSelector } from '../redux/hooks';
@@ -15,6 +15,7 @@ import { theme, colors } from '../config/colors';
 import ThemeSwitcher from '../components/ThemeSwitcher';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FONT_FAMILY } from '../config/fonts';
+import images from '../config/images';
 
 const APP_VERSION = '1.0.0';
 
@@ -30,257 +31,275 @@ const SettingsScreen = () => {
     console.log('Cache cleared');
   };
 
+  const getIconContainerStyle = () => {
+    return {
+      ...styles.settingIconContainer,
+      backgroundColor: isDark
+        ? 'rgba(134, 57, 232, 0.1)'
+        : 'rgba(134, 57, 232, 0.05)',
+    };
+  };
+
   return (
-    <ScrollView
+    <SafeAreaView
       style={[
         styles.container,
         { backgroundColor: themeMode.colors.background },
       ]}
-      contentContainerStyle={styles.contentContainer}
-      showsVerticalScrollIndicator={false}
     >
-      {/* Header Section */}
-      <View style={styles.headerSection}>
-        <View style={styles.appInfoContainer}>
-          <Image
-            source={require('../assets/images/app-icon.png')}
-            style={styles.appIcon}
-          />
-          <View style={styles.appTextContainer}>
-            <Text
-              variant="heading1"
-              style={[
-                styles.appTitle,
-                { color: themeMode.colors.text.primary },
-              ]}
-            >
-              MovieMate
-            </Text>
-            <Text
-              style={[
-                styles.appVersion,
-                { color: themeMode.colors.text.secondary },
-              ]}
-            >
-              Version {APP_VERSION}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Appearance Section */}
-      <View
-        style={[styles.sectionCard, { backgroundColor: themeMode.colors.card }]}
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
       >
-        <Text
-          variant="heading2"
-          style={[
-            styles.sectionTitle,
-            { color: themeMode.colors.text.primary },
-          ]}
-        >
-          Appearance
-        </Text>
-        <ThemeSwitcher />
-      </View>
-
-      {/* Preferences Section */}
-      <View
-        style={[styles.sectionCard, { backgroundColor: themeMode.colors.card }]}
-      >
-        <Text
-          variant="heading2"
-          style={[
-            styles.sectionTitle,
-            { color: themeMode.colors.text.primary },
-          ]}
-        >
-          Preferences
-        </Text>
-
-        <View style={styles.settingItem}>
-          <View style={styles.settingTextContainer}>
-            <Text
-              style={[
-                styles.settingLabel,
-                { color: themeMode.colors.text.primary },
-              ]}
-            >
-              Show adult content
-            </Text>
-            <Text
-              style={[
-                styles.settingDescription,
-                { color: themeMode.colors.text.secondary },
-              ]}
-            >
-              Include mature content in search results
-            </Text>
-          </View>
-          <Switch
-            trackColor={{
-              false: colors.neutral.grey300,
-              true: colors.primary.light,
-            }}
-            thumbColor={colors.primary.main}
-            ios_backgroundColor={colors.neutral.grey300}
-            value={false}
-            // Update this with your actual state and handler
-            onValueChange={() => {}}
-          />
-        </View>
-
-        <View
-          style={[
-            styles.separator,
-            { backgroundColor: themeMode.colors.border },
-          ]}
-        />
-
-        <TouchableOpacity style={styles.settingItem} onPress={clearCache}>
-          <View style={styles.settingTextContainer}>
-            <Text
-              style={[
-                styles.settingLabel,
-                { color: themeMode.colors.text.primary },
-              ]}
-            >
-              Clear cache
-            </Text>
-            <Text
-              style={[
-                styles.settingDescription,
-                { color: themeMode.colors.text.secondary },
-              ]}
-            >
-              Free up storage space
-            </Text>
-          </View>
-          <Icon name="trash-outline" size={20} color={colors.primary.main} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Support Section */}
-      <View
-        style={[styles.sectionCard, { backgroundColor: themeMode.colors.card }]}
-      >
-        <Text
-          variant="heading2"
-          style={[
-            styles.sectionTitle,
-            { color: themeMode.colors.text.primary },
-          ]}
-        >
-          Support
-        </Text>
-
-        <TouchableOpacity
-          style={styles.settingItem}
-          onPress={() => openLink('https://www.themoviedb.org/')}
-        >
-          <View style={styles.settingTextContainer}>
-            <Text
-              style={[
-                styles.settingLabel,
-                { color: themeMode.colors.text.primary },
-              ]}
-            >
-              Data provided by TMDB
-            </Text>
-            <Text
-              style={[
-                styles.settingDescription,
-                { color: themeMode.colors.text.secondary },
-              ]}
-            >
-              Visit The Movie Database
-            </Text>
-          </View>
-          <Icon name="open-outline" size={20} color={colors.primary.main} />
-        </TouchableOpacity>
-
-        <View
-          style={[
-            styles.separator,
-            { backgroundColor: themeMode.colors.border },
-          ]}
-        />
-
-        <TouchableOpacity
-          style={styles.settingItem}
-          onPress={() => openLink('mailto:support@moviemate.app')}
-        >
-          <View style={styles.settingTextContainer}>
-            <Text
-              style={[
-                styles.settingLabel,
-                { color: themeMode.colors.text.primary },
-              ]}
-            >
-              Contact support
-            </Text>
-            <Text
-              style={[
-                styles.settingDescription,
-                { color: themeMode.colors.text.secondary },
-              ]}
-            >
-              Send us feedback or report issues
-            </Text>
-          </View>
-          <Icon name="mail-outline" size={20} color={colors.primary.main} />
-        </TouchableOpacity>
-      </View>
-
-      {/* About Section */}
-      <View
-        style={[styles.sectionCard, { backgroundColor: themeMode.colors.card }]}
-      >
-        <Text
-          variant="heading2"
-          style={[
-            styles.sectionTitle,
-            { color: themeMode.colors.text.primary },
-          ]}
-        >
-          About
-        </Text>
-
-        <Text
-          style={[styles.aboutText, { color: themeMode.colors.text.secondary }]}
-        >
-          MovieMate is your personal movie companion. Browse popular movies,
-          search for your favorites, and save them for later. We aim to provide
-          the best user experience for movie enthusiasts.
-        </Text>
-
-        <View style={styles.socialContainer}>
-          {['logo-github', 'logo-twitter', 'logo-instagram'].map(
-            (icon, index) => (
-              <TouchableOpacity
-                key={icon}
+        {/* Header Section */}
+        <View style={styles.headerSection}>
+          <View style={styles.appInfoContainer}>
+            <Image source={images.icon} style={styles.appIcon} />
+            <View style={styles.appTextContainer}>
+              <Text
+                variant="heading1"
                 style={[
-                  styles.socialButton,
-                  { backgroundColor: colors.primary.light },
+                  styles.appTitle,
+                  { color: themeMode.colors.text.primary },
                 ]}
-                onPress={() => {}}
               >
-                <Icon name={icon} size={22} color={colors.neutral.white} />
-              </TouchableOpacity>
-            ),
-          )}
+                MovieMate
+              </Text>
+              <Text
+                style={[
+                  styles.appVersion,
+                  { color: themeMode.colors.text.secondary },
+                ]}
+              >
+                Version {APP_VERSION}
+              </Text>
+            </View>
+          </View>
         </View>
 
-        <Text
+        {/* Preferences Section */}
+        <View
           style={[
-            styles.copyrightText,
-            { color: themeMode.colors.text.secondary },
+            styles.sectionCard,
+            { backgroundColor: themeMode.colors.card },
           ]}
         >
-          © 2025 MovieMate. All rights reserved.
-        </Text>
-      </View>
-    </ScrollView>
+          <Text
+            variant="heading2"
+            style={[
+              styles.sectionTitle,
+              { color: themeMode.colors.text.primary },
+            ]}
+          >
+            Preferences
+          </Text>
+
+          {/* Theme settings with icon */}
+          <View style={styles.settingItem}>
+            <View style={getIconContainerStyle()}>
+              <Icon
+                name={isDark ? 'moon-outline' : 'sunny-outline'}
+                size={22}
+                color={colors.primary.main}
+              />
+            </View>
+            <View style={styles.settingTextContainer}>
+              <Text
+                style={[
+                  styles.settingLabel,
+                  { color: themeMode.colors.text.primary },
+                ]}
+              >
+                Theme
+              </Text>
+              <Text
+                style={[
+                  styles.settingDescription,
+                  { color: themeMode.colors.text.secondary },
+                ]}
+              >
+                Choose light, dark, or system default
+              </Text>
+            </View>
+          </View>
+
+          {/* Theme switcher component */}
+          <View style={styles.themeSwitcherContainer}>
+            <ThemeSwitcher />
+          </View>
+
+          <View
+            style={[
+              styles.separator,
+              { backgroundColor: themeMode.colors.border },
+            ]}
+          />
+
+          <TouchableOpacity style={styles.settingItem} onPress={clearCache}>
+            <View style={getIconContainerStyle()}>
+              <Icon
+                name="trash-outline"
+                size={22}
+                color={colors.primary.main}
+              />
+            </View>
+            <View style={styles.settingTextContainer}>
+              <Text
+                style={[
+                  styles.settingLabel,
+                  { color: themeMode.colors.text.primary },
+                ]}
+              >
+                Clear cache
+              </Text>
+              <Text
+                style={[
+                  styles.settingDescription,
+                  { color: themeMode.colors.text.secondary },
+                ]}
+              >
+                Free up storage space
+              </Text>
+            </View>
+            <Icon
+              name="chevron-forward-outline"
+              size={18}
+              color={themeMode.colors.text.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Support Section */}
+        <View
+          style={[
+            styles.sectionCard,
+            { backgroundColor: themeMode.colors.card },
+          ]}
+        >
+          <Text
+            variant="heading2"
+            style={[
+              styles.sectionTitle,
+              { color: themeMode.colors.text.primary },
+            ]}
+          >
+            Support
+          </Text>
+
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => openLink('https://www.themoviedb.org/')}
+          >
+            <View style={styles.settingTextContainer}>
+              <Text
+                style={[
+                  styles.settingLabel,
+                  { color: themeMode.colors.text.primary },
+                ]}
+              >
+                Data provided by TMDB
+              </Text>
+              <Text
+                style={[
+                  styles.settingDescription,
+                  { color: themeMode.colors.text.secondary },
+                ]}
+              >
+                Visit The Movie Database
+              </Text>
+            </View>
+            <Icon name="open-outline" size={20} color={colors.primary.main} />
+          </TouchableOpacity>
+
+          <View
+            style={[
+              styles.separator,
+              { backgroundColor: themeMode.colors.border },
+            ]}
+          />
+
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => openLink('mailto:support@moviemate.app')}
+          >
+            <View style={styles.settingTextContainer}>
+              <Text
+                style={[
+                  styles.settingLabel,
+                  { color: themeMode.colors.text.primary },
+                ]}
+              >
+                Contact support
+              </Text>
+              <Text
+                style={[
+                  styles.settingDescription,
+                  { color: themeMode.colors.text.secondary },
+                ]}
+              >
+                Send us feedback or report issues
+              </Text>
+            </View>
+            <Icon name="mail-outline" size={20} color={colors.primary.main} />
+          </TouchableOpacity>
+        </View>
+
+        {/* About Section */}
+        <View
+          style={[
+            styles.sectionCard,
+            { backgroundColor: themeMode.colors.card },
+          ]}
+        >
+          <Text
+            variant="heading2"
+            style={[
+              styles.sectionTitle,
+              { color: themeMode.colors.text.primary },
+            ]}
+          >
+            About
+          </Text>
+
+          <Text
+            style={[
+              styles.aboutText,
+              { color: themeMode.colors.text.secondary },
+            ]}
+          >
+            MovieMate is your personal movie companion. Browse popular movies,
+            search for your favorites, and save them for later. We aim to
+            provide the best user experience for movie enthusiasts.
+          </Text>
+
+          <View style={styles.socialContainer}>
+            {['logo-github', 'logo-twitter', 'logo-instagram'].map(
+              (icon, index) => (
+                <TouchableOpacity
+                  key={icon}
+                  style={[
+                    styles.socialButton,
+                    { backgroundColor: colors.primary.light },
+                  ]}
+                  onPress={() => {}}
+                >
+                  <Icon name={icon} size={22} color={colors.neutral.white} />
+                </TouchableOpacity>
+              ),
+            )}
+          </View>
+
+          <Text
+            style={[
+              styles.copyrightText,
+              { color: themeMode.colors.text.secondary },
+            ]}
+          >
+            © 2025 MovieMate. All rights reserved.
+          </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -342,6 +361,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  settingIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  themeSwitcherContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
   },
   settingTextContainer: {
     flex: 1,

@@ -191,7 +191,7 @@ const MovieDetailsScreen = ({ route, navigation }) => {
                 <Icon
                   name={isFavorite ? 'heart' : 'heart-outline'}
                   size={28}
-                  color={isFavorite ? colors.error : 'white'}
+                  color={isFavorite ? colors.error.main : 'white'}
                 />
               </TouchableOpacity>
 
@@ -427,7 +427,7 @@ const MovieDetailsScreen = ({ route, navigation }) => {
                     <Icon
                       name="cash-outline"
                       size={20}
-                      color={colors.success}
+                      color={colors.success.main}
                     />
                     <View style={styles.detailTextContainer}>
                       <Text style={styles.detailLabel}>Budget</Text>
@@ -450,8 +450,8 @@ const MovieDetailsScreen = ({ route, navigation }) => {
                       size={20}
                       color={
                         movie.revenue > movie.budget
-                          ? colors.success
-                          : colors.error
+                          ? colors.success.main
+                          : colors.error.main
                       }
                     />
                     <View style={styles.detailTextContainer}>
@@ -479,8 +479,8 @@ const MovieDetailsScreen = ({ route, navigation }) => {
                       size={20}
                       color={
                         movie.revenue > movie.budget
-                          ? colors.success
-                          : colors.error
+                          ? colors.success.main
+                          : colors.error.main
                       }
                     />
                     <View style={styles.detailTextContainer}>
@@ -491,8 +491,8 @@ const MovieDetailsScreen = ({ route, navigation }) => {
                           {
                             color:
                               movie.revenue > movie.budget
-                                ? colors.success
-                                : colors.error,
+                                ? colors.success.main
+                                : colors.error.main,
                           },
                         ]}
                       >

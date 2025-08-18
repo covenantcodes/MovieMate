@@ -22,6 +22,8 @@ import { colors } from '../config/colors';
 import { FONT_FAMILY } from '../config/fonts';
 import { useAppSelector } from '../redux/hooks';
 import { theme } from '../config/colors';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/types';
 
 interface MovieCardProps {
   movie: Movie;
@@ -43,7 +45,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   // State for favorite status with immediate UI updates
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
 
@@ -120,9 +122,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
 
   // Calculate rating color
   const getRatingColor = (rating: number) => {
-    if (rating >= 7) return colors.success;
-    if (rating >= 5) return colors.warning;
-    return colors.error;
+    if (rating >= 7) return colors.success.main;
+    if (rating >= 5) return colors.warning.main;
+    return colors.error.main;
   };
 
   return (
@@ -162,7 +164,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
             <Icon
               name={isFavorite ? 'heart' : 'heart-outline'}
               size={18}
-              color={isFavorite ? colors.error : themeMode.colors.text.primary}
+              color={
+                isFavorite ? colors.error.main : themeMode.colors.text.primary
+              }
             />
           </Animated.View>
         </TouchableOpacity>

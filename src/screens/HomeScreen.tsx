@@ -6,11 +6,14 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useAppSelector } from '../redux/hooks';
 import { theme } from '../config/colors';
 import { FONT_FAMILY } from '../config/fonts';
 import { tmdbApi, Movie } from '../services/tmdbApi';
+import { RootStackParamList } from '../navigation/types';
 
 // Components
 import Text from '../components/Text';
@@ -18,7 +21,13 @@ import HeroBanner from '../components/HeroBanner';
 import SectionHeader from '../components/SectionHeader';
 import MovieList from '../components/MovieList';
 
-const HomeScreen = ({ navigation }) => {
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList>;
+
+interface HomeScreenProps {
+  navigation: HomeScreenNavigationProp;
+}
+
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
 
@@ -90,7 +99,7 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView
       style={[
         styles.container,
-        { backgroundColor: themeMode.colors.background },
+        { flex: 1, backgroundColor: themeMode.colors.background },
       ]}
       contentContainerStyle={styles.contentContainer}
       refreshControl={

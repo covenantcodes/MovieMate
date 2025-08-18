@@ -17,10 +17,11 @@ import MovieListScreen from '../screens/MovieListScreen';
 // Import custom tab bar
 import TabBar from '../components/TabBar';
 import { FONT_FAMILY } from '../config/fonts';
+import { RootStackParamList } from './types';
 
 // Create navigators
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 // Home Stack
 const HomeStack = () => {
@@ -131,26 +132,59 @@ const FavoritesStack = () => {
   );
 };
 
-const AppNavigator = () => {
+// Settings Stack
+const SettingsStack = () => {
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBar={props => <TabBar {...props} />}
-        screenOptions={{
-          headerShown: false,
-          tabBarShowLabel: false,
-        }}
-      >
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Search" component={SearchStack} />
-        <Tab.Screen name="Favorites" component={FavoritesStack} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: themeMode.colors.background,
+          shadowColor: 'transparent',
+          elevation: 0,
+        },
+        headerTintColor: themeMode.colors.text.primary,
+        headerTitleStyle: {
+          fontFamily: FONT_FAMILY.semiBold,
+          fontSize: 18,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="SettingsMain"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
+      />
+    </Stack.Navigator>
   );
 };
+
+// Main tab navigator
+function MainTabNavigator() {
+  const { isDark } = useAppSelector(state => state.theme);
+
+  return (
+    <Tab.Navigator
+      tabBar={props => <TabBar {...props} />}
+      screenOptions={{ headerShown: false }}
+    >
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Search" component={SearchStack} />
+      <Tab.Screen name="Favorites" component={FavoritesStack} />
+      <Tab.Screen name="Settings" component={SettingsStack} />
+    </Tab.Navigator>
+  );
+}
+
+// Root navigator
+function AppNavigator() {
+  return (
+    <NavigationContainer>
+      <MainTabNavigator />
+    </NavigationContainer>
+  );
+}
 
 export default AppNavigator;

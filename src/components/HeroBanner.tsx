@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Movie, IMAGE_SIZES, tmdbApi } from '../services/tmdbApi';
 import Text from './Text';
 import { LinearGradient } from 'react-native-linear-gradient';
@@ -21,6 +21,8 @@ import Animated, {
   withSequence,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import { RootStackParamList } from '../navigation/types';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface HeroBannerProps {
   movie: Movie | null;
@@ -31,7 +33,7 @@ const { width, height } = Dimensions.get('window');
 const bannerHeight = height * 0.6;
 
 const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { isDark } = useAppSelector(state => state.theme);
   const themeMode = isDark ? theme.dark : theme.light;
 
@@ -63,6 +65,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
   });
 
   const toggleFavorite = () => {
+    if (!movie) return;
     // Animate heart icon
     favoriteScale.value = withSequence(
       withSpring(1.4, { damping: 4 }),
@@ -78,7 +81,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
     }
   };
 
-  if (loading || !movie) {
+  if (!movie || loading) {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
         <ActivityIndicator size="large" color={colors.primary.main} />
@@ -116,7 +119,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
 
             <View style={styles.infoRow}>
               <View style={styles.ratingContainer}>
-                <Icon name="star" size={16} color={colors.warning} />
+                <Icon name="star" size={16} color={colors.warning.main} />
                 <Text variant="caption" style={styles.rating}>
                   {movie.vote_average.toFixed(1)}
                 </Text>
@@ -134,7 +137,9 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ movie, loading }) => {
                   <Icon
                     name={isFavorite ? 'heart' : 'heart-outline'}
                     size={18}
-                    color={isFavorite ? colors.error : colors.neutral.white}
+                    color={
+                      isFavorite ? colors.error.main : colors.neutral.white
+                    }
                   />
                 </Animated.View>
               </TouchableOpacity>
